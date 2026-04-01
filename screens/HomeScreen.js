@@ -9,6 +9,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -19,16 +20,16 @@ export default function HomeScreen() {
   const exclusive = [
     {
       id: 1,
-      name: "Banana",
+      name: "Organic Banana",
       price: "4.99",
-      desc: "7pcs, Priceg",
+      desc: "7pcs",
       image: require("../assets/banana.png"),
     },
     {
       id: 2,
-      name: "Apple",
+      name: "Red Apple",
       price: "4.99",
-      desc: "1kg, Priceg",
+      desc: "1kg",
       image: require("../assets/apple.png"),
     },
   ];
@@ -37,15 +38,15 @@ export default function HomeScreen() {
     {
       id: 3,
       name: "Chili",
-      price: "4,99",
-      desc: "1kg, Priceg",
+      price: "4.99",
+      desc: "1kg",
       image: require("../assets/chili.png"),
     },
     {
       id: 4,
       name: "Ginger",
-      price: "4,99",
-      desc: "250mg, Priceg",
+      price: "4.99",
+      desc: "250g",
       image: require("../assets/gung.png"),
     },
   ];
@@ -67,20 +68,20 @@ export default function HomeScreen() {
     {
       id: 7,
       name: "Beef Bone",
-      price: "4,99",
+      price: "4.99",
       desc: "1kg",
       image: require("../assets/beef.png"),
     },
     {
       id: 8,
-      name: "Chicken",
-      price: "4,99",
+      name: "Broiler Chicken",
+      price: "4.99",
       desc: "1kg",
       image: require("../assets/chicken.png"),
     },
   ];
 
-  // CARD (🔥 CLICK)
+  // CARD
   const renderCard = ({ item }) => (
     <TouchableOpacity
       style={styles.card}
@@ -89,7 +90,7 @@ export default function HomeScreen() {
       <Image source={item.image} style={styles.image} />
 
       <Text style={styles.name}>{item.name}</Text>
-      <Text style={styles.desc}>{item.desc}, Price</Text>
+      <Text style={styles.desc}>{item.desc}</Text>
       <Text style={styles.price}>${item.price}</Text>
 
       <View style={styles.btn}>
@@ -111,25 +112,25 @@ export default function HomeScreen() {
       <ScrollView contentContainerStyle={styles.container}>
         {/* HEADER */}
         <View style={styles.header}>
-  
           <View style={styles.logoWrapper}>
             <Image
               source={require("../assets/la.png")}
               style={styles.leaf}
             />
-
             <Image
               source={require("../assets/carrot.png")}
               style={styles.carrot}
             />
-            </View>
+          </View>
 
           <Text style={styles.location}>Dhaka, Banassre</Text>
-
         </View>
 
         {/* SEARCH */}
-        <TextInput placeholder="Search Store" style={styles.search} />
+        <View style={styles.searchBox}>
+          <Ionicons name="search-outline" size={22} color="black" />
+          <TextInput placeholder="Search Store" style={styles.search} />
+        </View>
 
         {/* BANNER */}
         <Image
@@ -171,7 +172,6 @@ export default function HomeScreen() {
           <Text style={styles.more}>See all</Text>
         </View>
 
-        {/* SLIDE */}
         <FlatList
           data={groceriesSlide}
           horizontal
@@ -181,7 +181,6 @@ export default function HomeScreen() {
           contentContainerStyle={{ marginBottom: 15 }}
         />
 
-        {/* PRODUCTS */}
         <FlatList
           data={groceriesProducts}
           horizontal
@@ -206,29 +205,44 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 
-  logo: {
-    width: 80,          // tăng kích thước
-    height: 80,
-    resizeMode: "contain", // 🔥 QUAN TRỌNG (không bị cắt)
+  logoWrapper: {
+    width: 80,
+    height: 30,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   leaf: {
-  position: "absolute",   // 🔥 BẮT BUỘC
-  top: -6,
-  left: 15,                 // chỉnh lên xuống
-  width: 10,
-  height: 10,
-  resizeMode: "contain",
-},
+    position: "absolute",
+    top: -3,
+    left: 44,
+    width: 10,
+    height: 10,
+    resizeMode: "contain",
+  },
+
+  carrot: {
+    width: 20,
+    height: 30,
+    resizeMode: "contain",
+  },
 
   location: {
     fontWeight: "bold",
   },
 
-  search: {
+  searchBox: {
+    flexDirection: "row",
+    alignItems: "center",
     backgroundColor: "#eee",
-    padding: 10,
+    paddingHorizontal: 10,
     borderRadius: 10,
+    marginVertical: 10,
+  },
+
+  search: {
+    flex: 1,
+    padding: 10,
   },
 
   banner: {
@@ -289,7 +303,7 @@ const styles = StyleSheet.create({
     bottom: 10,
     width: 35,
     height: 35,
-    borderRadius: 8,
+    borderRadius: 13,
     alignItems: "center",
     justifyContent: "center",
   },
