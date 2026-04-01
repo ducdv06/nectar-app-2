@@ -1,6 +1,6 @@
 Đỗ Văn Đức - 23810310329 - nectar-app-2
-![home1](assets/home1.png)
-![home2](assets/home2.png)
-![detail](assets/detail.png)
-![explore](assets/explore.png)
-![beverage](assets/beverage.png)
+![Home 1](./assets/home1.png)
+![Home 2](./assets/home2.png)
+![Detail](./assets/detail.png)
+![Explore](./assets/explore.png)
+![Beverage](./assets/beverage.png)
