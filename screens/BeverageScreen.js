@@ -86,16 +86,10 @@ export default function BeverageScreen() {
         <Text style={styles.title}>Beverages</Text>
 
         <View style={{ flexDirection: "row" }}>
-          <Ionicons name="options-outline" size={24} style={{ marginRight: 15 }} />
+          <Ionicons name="options-outline" size={24} style={{ marginRight: 6}} />
 
-          <TouchableOpacity onPress={() => setGrid(!grid)}>
-            <Ionicons name={grid ? "list" : "grid"} size={24} />
-          </TouchableOpacity>
         </View>
       </View>
-
-      {/* SEARCH */}
-      <TextInput placeholder="Search Store" style={styles.search} />
 
       {/* LIST */}
       <FlatList
@@ -115,6 +109,7 @@ export default function BeverageScreen() {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 20,
     flex: 1,
     padding: 15,
   },
@@ -123,6 +118,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    marginBottom: 17,
   },
 
   title: {

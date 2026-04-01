@@ -10,15 +10,38 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
-const ProductDetail = () => {
+export default function ProductDetail() {
   const navigation = useNavigation();
   const [qty, setQty] = useState(1);
 
   return (
     <View style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
 
-        {/* Image */}
+      {/* 🔥 TOP BAR FIXED */}
+      <View style={styles.topBar}>
+        <View style={styles.left}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Ionicons name="chevron-back" size={22} />
+          </TouchableOpacity>
+
+          <Text style={styles.headerTitle}>Detail</Text>
+        </View>
+
+        <TouchableOpacity>
+          <Image
+            source={require("../assets/upload.png")}
+            style={styles.uploadIcon}
+          />
+        </TouchableOpacity>
+      </View>
+
+      {/* CONTENT */}
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingTop: 80 }} // 🔥 tránh bị đè bởi topBar
+      >
+
+        {/* IMAGE */}
         <View style={styles.imageWrapper}>
           <Image
             source={require("../assets/apple.png")}
@@ -26,26 +49,26 @@ const ProductDetail = () => {
           />
         </View>
 
-        {/* Info */}
+        {/* INFO */}
         <View style={styles.info}>
           <View style={styles.rowBetween}>
             <Text style={styles.title}>Naturel Red Apple</Text>
-            <Ionicons name="heart-outline" size={22} />
+            <Ionicons name="heart-outline" size={20} />
           </View>
 
           <Text style={styles.desc}>1kg, Price</Text>
 
-          {/* Quantity + Price */}
+          {/* QTY */}
           <View style={styles.qtyRow}>
             <View style={styles.qtyBox}>
               <TouchableOpacity onPress={() => setQty(qty > 1 ? qty - 1 : 1)}>
-                <Ionicons name="remove" size={18} color="#53B175" />
+                <Ionicons name="remove" size={16} color="#53B175" />
               </TouchableOpacity>
 
               <Text style={styles.qty}>{qty}</Text>
 
               <TouchableOpacity onPress={() => setQty(qty + 1)}>
-                <Ionicons name="add" size={18} color="#53B175" />
+                <Ionicons name="add" size={16} color="#53B175" />
               </TouchableOpacity>
             </View>
 
@@ -53,81 +76,92 @@ const ProductDetail = () => {
           </View>
         </View>
 
-        {/* Sections */}
+        {/* PRODUCT DETAIL */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Product Detail</Text>
+          <View style={styles.sectionRow}>
+            <Text style={styles.sectionTitle}>Product Detail</Text>
+            <Ionicons name="chevron-down" size={18} />
+          </View>
+
           <Text style={styles.sectionText}>
-            Apples are nutritious. Apples may be good for weight loss. apples
-            may be good for your heart. As part of a healtful and varied diet.
+            Apples are nutritious. Apples may be good for weight loss.
+            Apples may be good for your heart. As part of a healthy diet.
           </Text>
         </View>
 
-        <View style={styles.sectionRow}>
-          <Text style={styles.sectionTitle}>Nutritions</Text>
-          <Text style={styles.badge}>100gr</Text>
-        </View>
+        {/* BUTTON */}
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Add To Basket</Text>
+        </TouchableOpacity>
 
-        <View style={styles.sectionRow}>
-          <Text style={styles.sectionTitle}>Review</Text>
-          <View style={{ flexDirection: "row" }}>
-            {[...Array(5)].map((_, i) => (
-              <Ionicons key={i} name="star" size={16} color="#FFB800" />
-            ))}
-          </View>
-        </View>
       </ScrollView>
-
-      {/* Button */}
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Add To Basket</Text>
-      </TouchableOpacity>
     </View>
   );
-};
+}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    padding: 20,
   },
 
-  header: {
+  // 🔥 TOP BAR
+  topBar: {
+    position: "absolute",
+    top: 40,
+    left: 15,
+    right: 15,
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 10,
+    alignItems: "center",
+    zIndex: 100,
+  },
+
+  left: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: "600",
+  },
+
+  uploadIcon: {
+    width: 20,
+    height: 20,
   },
 
   imageWrapper: {
     backgroundColor: "#F2F3F2",
     borderRadius: 20,
     padding: 20,
-    alignItems: "center",
+    marginHorizontal: 15,
   },
 
   image: {
     width: 200,
     height: 200,
+    alignSelf: "center",
     resizeMode: "contain",
   },
 
   info: {
-    marginTop: 20,
+    padding: 20,
   },
 
   rowBetween: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
   },
 
   title: {
-    fontFamily: "Gilroy-Bold",
-    fontSize: 20,
-    color: "#181725",
+    fontSize: 18,
+    fontWeight: "600",
   },
 
   desc: {
-    fontFamily: "Gilroy-Medium",
     color: "#7C7C7C",
     marginTop: 5,
   },
@@ -135,8 +169,8 @@ const styles = StyleSheet.create({
   qtyRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
     marginTop: 15,
+    alignItems: "center",
   },
 
   qtyBox: {
@@ -144,30 +178,29 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderWidth: 1,
     borderColor: "#E2E2E2",
-    borderRadius: 15,
-    paddingHorizontal: 15,
+    borderRadius: 12,
+    paddingHorizontal: 12,
     paddingVertical: 5,
     gap: 10,
   },
 
   qty: {
-    fontSize: 16,
+    fontSize: 14,
   },
 
   price: {
-    fontFamily: "Gilroy-SemiBold",
-    fontSize: 18,
-    color: "#181725",
+    fontSize: 16,
+    fontWeight: "600",
   },
 
   section: {
-    marginTop: 20,
+    paddingHorizontal: 20,
+    marginTop: 10,
   },
 
   sectionTitle: {
-    fontFamily: "Gilroy-SemiBold",
-    fontSize: 16,
-    color: "#181725",
+    fontSize: 14,
+    fontWeight: "600",
   },
 
   sectionText: {
@@ -178,14 +211,6 @@ const styles = StyleSheet.create({
   sectionRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 20,
-  },
-
-  badge: {
-    backgroundColor: "#F2F3F2",
-    paddingHorizontal: 10,
-    paddingVertical: 3,
-    borderRadius: 5,
   },
 
   button: {
@@ -193,14 +218,11 @@ const styles = StyleSheet.create({
     padding: 18,
     borderRadius: 15,
     alignItems: "center",
-    marginTop: 10,
+    margin: 20,
   },
 
   buttonText: {
     color: "#fff",
-    fontFamily: "Gilroy-SemiBold",
-    fontSize: 16,
+    fontWeight: "600",
   },
 });
-
-export default ProductDetail;

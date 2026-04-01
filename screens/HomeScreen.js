@@ -21,14 +21,14 @@ export default function HomeScreen() {
       id: 1,
       name: "Banana",
       price: "4.99",
-      desc: "1kg",
+      desc: "7pcs, Priceg",
       image: require("../assets/banana.png"),
     },
     {
       id: 2,
       name: "Apple",
       price: "4.99",
-      desc: "1kg",
+      desc: "1kg, Priceg",
       image: require("../assets/apple.png"),
     },
   ];
@@ -37,15 +37,15 @@ export default function HomeScreen() {
     {
       id: 3,
       name: "Chili",
-      price: "3.99",
-      desc: "1kg",
+      price: "4,99",
+      desc: "1kg, Priceg",
       image: require("../assets/chili.png"),
     },
     {
       id: 4,
       name: "Ginger",
-      price: "2.99",
-      desc: "250mg",
+      price: "4,99",
+      desc: "250mg, Priceg",
       image: require("../assets/gung.png"),
     },
   ];
@@ -67,14 +67,14 @@ export default function HomeScreen() {
     {
       id: 7,
       name: "Beef Bone",
-      price: "12.99",
+      price: "4,99",
       desc: "1kg",
       image: require("../assets/beef.png"),
     },
     {
       id: 8,
       name: "Chicken",
-      price: "9.99",
+      price: "4,99",
       desc: "1kg",
       image: require("../assets/chicken.png"),
     },
@@ -111,11 +111,21 @@ export default function HomeScreen() {
       <ScrollView contentContainerStyle={styles.container}>
         {/* HEADER */}
         <View style={styles.header}>
-          <Image
-            source={require("../assets/carrot.png")}
-            style={styles.logo}
-          />
+  
+          <View style={styles.logoWrapper}>
+            <Image
+              source={require("../assets/la.png")}
+              style={styles.leaf}
+            />
+
+            <Image
+              source={require("../assets/carrot.png")}
+              style={styles.carrot}
+            />
+            </View>
+
           <Text style={styles.location}>Dhaka, Banassre</Text>
+
         </View>
 
         {/* SEARCH */}
@@ -197,10 +207,19 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    width: 30,
-    height: 30,
-    marginBottom: 5,
+    width: 80,          // tăng kích thước
+    height: 80,
+    resizeMode: "contain", // 🔥 QUAN TRỌNG (không bị cắt)
   },
+
+  leaf: {
+  position: "absolute",   // 🔥 BẮT BUỘC
+  top: -6,
+  left: 15,                 // chỉnh lên xuống
+  width: 10,
+  height: 10,
+  resizeMode: "contain",
+},
 
   location: {
     fontWeight: "bold",

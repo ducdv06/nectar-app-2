@@ -2,7 +2,7 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Ionicons } from "@expo/vector-icons";
+import { Image } from "react-native"; // ✅ ĐÚNG VỊ TRÍ
 
 import HomeScreen from "./screens/HomeScreen";
 import ExploreScreen from "./screens/ExploreScreen";
@@ -16,17 +16,30 @@ const Stack = createStackNavigator();
 function ShopStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="Detail" component={ProductDetail} />
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="Detail"
+        component={ProductDetail}
+        options={{ headerShown: false }} // 🔥 CHỈNH Ở ĐÂY
+      />
     </Stack.Navigator>
   );
 }
 
-// STACK EXPLORE (để mở beverages)
+// STACK EXPLORE
 function ExploreStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="ExploreMain" component={ExploreScreen} options={{ headerShown: false }} />
+      <Stack.Screen
+        name="ExploreMain"
+        component={ExploreScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen name="Beverages" component={BeverageScreen} />
     </Stack.Navigator>
   );
@@ -42,15 +55,32 @@ export default function App() {
           tabBarInactiveTintColor: "gray",
           tabBarStyle: { height: 65 },
 
-          tabBarIcon: ({ color, size }) => {
+          tabBarIcon: ({ focused }) => {
             let icon;
-            if (route.name === "Shop") icon = "home-outline";
-            else if (route.name === "Explore") icon = "search-outline";
-            else if (route.name === "Cart") icon = "cart-outline";
-            else if (route.name === "Favourite") icon = "heart-outline";
-            else if (route.name === "Account") icon = "person-outline";
 
-            return <Ionicons name={icon} size={size} color={color} />;
+            if (route.name === "Shop") {
+              icon = require("./assets/Vector1.png");
+            } else if (route.name === "Explore") {
+              icon = require("./assets/Vector2.png");
+            } else if (route.name === "Cart") {
+              icon = require("./assets/Vector3.png");
+            } else if (route.name === "Favourite") {
+              icon = require("./assets/Vector4.png");
+            } else if (route.name === "Account") {
+              icon = require("./assets/Vector5.png");
+            }
+
+            return (
+              <Image
+                source={icon}
+                style={{
+                  width: 24,
+                  height: 24,
+                  tintColor: focused ? "green" : "gray",
+                }}
+                resizeMode="contain"
+              />
+            );
           },
         })}
       >

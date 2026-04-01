@@ -83,7 +83,7 @@ export default function ExploreScreen() {
   );
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1 , marginTop: 20,}}>
       {/* TITLE */}
       <Text style={styles.title}>Find Products</Text>
 
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#eee",
     margin: 15,
-    padding: 12,
+    padding: 7,
     borderRadius: 12,
   },
 
