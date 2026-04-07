@@ -6,11 +6,12 @@ import {
   Image,
   TouchableOpacity,
   StyleSheet,
-  TextInput,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 export default function BeverageScreen() {
+  const navigation = useNavigation();
   const [grid, setGrid] = useState(true);
 
   const data = [
@@ -43,14 +44,14 @@ export default function BeverageScreen() {
       image: require("../assets/orange_juice.png"),
     },
     {
-      id: 6,
+      id: 5,
       name: "Coca Cola Can",
       size: "325ml, Price",
       price: "4.99",
       image: require("../assets/coka.png"),
     },
     {
-      id: 5,
+      id: 6,
       name: "Pepsi Can",
       size: "330ml, Price",
       price: "4.99",
@@ -59,11 +60,15 @@ export default function BeverageScreen() {
   ];
 
   const renderItem = ({ item }) => (
-    <View style={grid ? styles.card : styles.list}>
-      {/* IMAGE */}
+    <TouchableOpacity 
+      style={grid ? styles.card : styles.list}
+      onPress={() => navigation.navigate("Shop", {
+        screen: "Detail",
+        params: { item }
+      })}
+    >
       <Image source={item.image} style={styles.img} />
 
-      {/* INFO */}
       <View style={{ flex: 1 }}>
         <Text style={styles.name}>{item.name}</Text>
         <Text style={styles.size}>{item.size}</Text>
@@ -71,27 +76,30 @@ export default function BeverageScreen() {
         <View style={styles.row}>
           <Text style={styles.price}>${item.price}</Text>
 
-          <View style={styles.btn}>
+          <TouchableOpacity style={styles.btn}>
             <Text style={{ color: "#fff", fontSize: 18 }}>+</Text>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 
   return (
     <View style={styles.container}>
-      {/* HEADER */}
       <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+          <Ionicons name="chevron-back" size={24} color="black" />
+        </TouchableOpacity>
+
         <Text style={styles.title}>Beverages</Text>
 
-        <View style={{ flexDirection: "row" }}>
-          <Ionicons name="options-outline" size={24} style={{ marginRight: 6}} />
-
-        </View>
+        <View style={{ width: 30 }} />
+        
+        <TouchableOpacity onPress={() => setGrid(!grid)} style={styles.optionButton}>
+          <Ionicons name="options-outline" size={24} color="black" />
+        </TouchableOpacity>
       </View>
 
-      {/* LIST */}
       <FlatList
         data={data}
         numColumns={grid ? 2 : 1}
@@ -99,9 +107,7 @@ export default function BeverageScreen() {
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={{ paddingBottom: 100 }}
-        columnWrapperStyle={
-          grid ? { justifyContent: "space-between" } : null
-        }
+        columnWrapperStyle={grid ? { justifyContent: "space-between" } : null}
       />
     </View>
   );
@@ -112,78 +118,80 @@ const styles = StyleSheet.create({
     marginTop: 20,
     flex: 1,
     padding: 15,
+    backgroundColor: "#fff",
   },
-
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 17,
   },
-
+  backButton: {
+    padding: 5,
+    zIndex: 1,
+  },
   title: {
     fontSize: 22,
     fontWeight: "bold",
+    textAlign: "center",
+    flex: 1,
   },
-
-  search: {
-    backgroundColor: "#eee",
-    padding: 12,
-    borderRadius: 10,
-    marginVertical: 15,
+  optionButton: {
+    padding: 5,
   },
-
-  // 🔥 CARD GIỐNG HOME
   card: {
     width: "48%",
     backgroundColor: "#fff",
     borderRadius: 18,
     padding: 12,
     marginBottom: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
-
   list: {
     flexDirection: "row",
     backgroundColor: "#fff",
     borderRadius: 18,
     padding: 12,
     marginBottom: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
-
-  // 🔥 FIX ẢNH KHÔNG BỊ CẮT
   img: {
     width: "100%",
     height: 100,
-    resizeMode: "contain", // 🔥 QUAN TRỌNG
+    resizeMode: "contain",
   },
-
   name: {
     fontWeight: "bold",
     marginTop: 5,
   },
-
   size: {
     color: "gray",
     fontSize: 12,
   },
-
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     marginTop: 10,
   },
-
   price: {
     fontWeight: "bold",
+    fontSize: 16,
+    color: "green",
   },
-
-  // 🔥 NÚT GIỐNG HOME
   btn: {
     backgroundColor: "green",
     width: 35,
     height: 35,
-    borderRadius: 8, // 🔥 KHÔNG TRÒN
+    borderRadius: 8,
     alignItems: "center",
     justifyContent: "center",
   },

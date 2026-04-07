@@ -2,12 +2,16 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-import { Image } from "react-native"; // ✅ ĐÚNG VỊ TRÍ
+import { Image } from "react-native";
 
 import HomeScreen from "./screens/HomeScreen";
 import ExploreScreen from "./screens/ExploreScreen";
 import BeverageScreen from "./screens/BeverageScreen";
 import ProductDetail from "./screens/ProductDetail";
+import SearchScreen from "./screens/SearchScreen";
+import CartScreen from "./screens/CartScreen";
+import FavouriteScreen from "./screens/FavouriteScreen";
+import AccountScreen from "./screens/AccountScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -21,11 +25,10 @@ function ShopStack() {
         component={HomeScreen}
         options={{ headerShown: false }}
       />
-
       <Stack.Screen
         name="Detail"
         component={ProductDetail}
-        options={{ headerShown: false }} // 🔥 CHỈNH Ở ĐÂY
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
@@ -41,6 +44,7 @@ function ExploreStack() {
         options={{ headerShown: false }}
       />
       <Stack.Screen name="Beverages" component={BeverageScreen} />
+      <Stack.Screen name="Search" component={SearchScreen} />
     </Stack.Navigator>
   );
 }
@@ -86,9 +90,9 @@ export default function App() {
       >
         <Tab.Screen name="Shop" component={ShopStack} />
         <Tab.Screen name="Explore" component={ExploreStack} />
-        <Tab.Screen name="Cart" component={BeverageScreen} />
-        <Tab.Screen name="Favourite" component={BeverageScreen} />
-        <Tab.Screen name="Account" component={BeverageScreen} />
+        <Tab.Screen name="Cart" component={CartScreen} />
+        <Tab.Screen name="Favourite" component={FavouriteScreen} />
+        <Tab.Screen name="Account" component={AccountScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
