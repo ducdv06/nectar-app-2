@@ -5,3 +5,6 @@
 ![explore](https://github.com/user-attachments/assets/41d904cc-cc5a-4f75-b514-75b49cb5a4ac)
 ![beverage](https://github.com/user-attachments/assets/cf4da4b4-be13-4bc3-9493-d7d686860708)
 ![filter](https://github.com/ducdv06/nectar-app-2/blob/main/assets/filter.jpg)
+![mycart](https://github.com/ducdv06/nectar-app-2/blob/main/assets/mycart.jpg)
+![myfavorite](https://github.com/ducdv06/nectar-app-2/blob/main/assets/myfavorite.jpg)
+![search](https://github.com/ducdv06/nectar-app-2/blob/main/assets/search.jpg)
