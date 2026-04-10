@@ -8,3 +8,7 @@
 ![mycart](https://github.com/ducdv06/nectar-app-2/blob/main/assets/mycart.jpg)
 ![myfavorite](https://github.com/ducdv06/nectar-app-2/blob/main/assets/myfavorite.jpg)
 ![search](https://github.com/ducdv06/nectar-app-2/blob/main/assets/search.jpg)
+![z7711412522102_ea823129c99eec4b7cb22dcf968ab71f](https://github.com/user-attachments/assets/7e538400-1ab1-4737-beec-b99f1b33572a)
+![z7711411847181_28f37b32ed93980b0621895bb7a006c4](https://github.com/user-attachments/assets/d2f60f6b-d8da-4178-90da-3fec94ce3159)
+![z7711411827195_a3e815bbd5ad137a3dd6763a365258ba](https://github.com/user-attachments/assets/8488bfed-4b35-4c1c-89d8-0545a2b129f4)
+![z7711411816952_139a6b79b87510849280ca7758cb1963](https://github.com/user-attachments/assets/dbc1d405-9f81-4918-878c-294d1f59585d)
