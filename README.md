@@ -58,7 +58,6 @@ Nectar App là ứng dụng mua sắm trực tuyến chuyên về thực phẩm 
 
 ### Các bước chạy
 
-```bash
 # 1. Clone dự án
 git clone https://github.com/ducdv06/nectar-app-2.git
 
