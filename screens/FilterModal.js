@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// screens/FilterModal.js
+import React from "react";
 import {
   View,
   Text,
@@ -9,37 +10,26 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function FilterModal({ visible, onClose, onApply }) {
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [selectedBrands, setSelectedBrands] = useState([]);
-
+export default function FilterModal({ 
+  visible, 
+  onClose, 
+  onApply,
+  selectedCategories = [],
+  selectedBrands = [],
+  onToggleCategory,
+  onToggleBrand,
+  onReset
+}) {
   const categories = ["Eggs", "Noodles & Pasta", "Chips & Crisps", "Fast Food"];
   const brands = ["Individual Collection", "Cocola", "Ifad", "Kazi Farmas"];
 
-  const toggleCategory = (category) => {
-    if (selectedCategories.includes(category)) {
-      setSelectedCategories(selectedCategories.filter(c => c !== category));
-    } else {
-      setSelectedCategories([...selectedCategories, category]);
-    }
-  };
-
-  const toggleBrand = (brand) => {
-    if (selectedBrands.includes(brand)) {
-      setSelectedBrands(selectedBrands.filter(b => b !== brand));
-    } else {
-      setSelectedBrands([...selectedBrands, brand]);
-    }
-  };
-
   const handleApply = () => {
-    onApply({ categories: selectedCategories, brands: selectedBrands });
+    onApply();
     onClose();
   };
 
   const handleReset = () => {
-    setSelectedCategories([]);
-    setSelectedBrands([]);
+    if (onReset) onReset();
   };
 
   return (
@@ -69,7 +59,7 @@ export default function FilterModal({ visible, onClose, onApply }) {
               <TouchableOpacity
                 key={cat}
                 style={styles.option}
-                onPress={() => toggleCategory(cat)}
+                onPress={() => onToggleCategory(cat)}
               >
                 <View style={styles.checkbox}>
                   {selectedCategories.includes(cat) && (
@@ -86,7 +76,7 @@ export default function FilterModal({ visible, onClose, onApply }) {
               <TouchableOpacity
                 key={brand}
                 style={styles.option}
-                onPress={() => toggleBrand(brand)}
+                onPress={() => onToggleBrand(brand)}
               >
                 <View style={styles.checkbox}>
                   {selectedBrands.includes(brand) && (

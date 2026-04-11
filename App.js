@@ -1,148 +1,91 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createStackNavigator } from "@react-navigation/stack";
-import { Image, View } from "react-native";
+// App.js
+import React, { useEffect, useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { ActivityIndicator, View } from 'react-native';
 
-import HomeScreen from "./screens/HomeScreen";
-import ExploreScreen from "./screens/ExploreScreen";
-import BeverageScreen from "./screens/BeverageScreen";
-import ProductDetail from "./screens/ProductDetail";
-import SearchScreen from "./screens/SearchScreen";
-import CartScreen from "./screens/CartScreen";
-import FavouriteScreen from "./screens/FavouriteScreen";
-import AccountScreen from "./screens/AccountScreen";
-import CheckoutScreen from "./screens/CheckoutScreen";
-import OrderSuccessScreen from "./screens/OrderSuccessScreen";
-import ErrorScreen from "./screens/ErrorScreen";
+import SplashScreen from './screens/SplashScreen';
+import OnboardingScreen from './screens/OnboardingScreen';
+import LoginScreen from './screens/LoginScreen';
+import SignUpScreen from './screens/SignUpScreen';
+import OrderSuccessScreen from './screens/OrderSuccessScreen';
+import OrderFailedScreen from './screens/OrderFailedScreen';
+import CheckoutScreen from './screens/CheckoutScreen';
+import TabNavigator from './navigation/TabNavigator';
+import BeverageScreen from './screens/BeverageScreen';
+import SearchScreen from './screens/SearchScreen';
+import ProductDetailScreen from './screens/ProductDetail';
+import OrdersScreen from './screens/OrdersScreen';           // Thêm import
+import OrderHistoryScreen from './screens/OrderHistoryScreen'; // Thêm import
 
-const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
+import { getUser } from './services/storageService';
 
+const Stack = createNativeStackNavigator();
 
-// ================= SHOP STACK =================
-function ShopStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="Detail" component={ProductDetail} options={{ headerShown: false }} />
-      <Stack.Screen name="Checkout" component={CheckoutScreen} options={{ presentation: "modal" }} />
-      <Stack.Screen name="OrderSuccess" component={OrderSuccessScreen} />
-      <Stack.Screen name="Error" component={ErrorScreen} options={{ headerShown: false }} />
-    </Stack.Navigator>
-  );
-}
-
-
-// ================= EXPLORE STACK =================
-function ExploreStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="ExploreMain" component={ExploreScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="Beverages" component={BeverageScreen} />
-      <Stack.Screen name="Search" component={SearchScreen} />
-      <Stack.Screen name="Checkout" component={CheckoutScreen} options={{ presentation: "modal" }} />
-      <Stack.Screen name="OrderSuccess" component={OrderSuccessScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="Error" component={ErrorScreen} options={{ headerShown: false }} />
-    </Stack.Navigator>
-  );
-}
-
-
-// ================= CART STACK =================
-function CartStack() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="CartMain" component={CartScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="Checkout" component={CheckoutScreen} options={{ presentation: "modal" }} />
-      <Stack.Screen name="OrderSuccess" component={OrderSuccessScreen} />
-    </Stack.Navigator>
-  );
-}
-
-
-// ================= APP =================
 export default function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    checkLoginStatus();
+  }, []);
+
+  const checkLoginStatus = async () => {
+    try {
+      const user = await getUser();
+      setIsLoggedIn(!!user);
+    } catch (error) {
+      setIsLoggedIn(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="green" />
+      </View>
+    );
+  }
+
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          headerShown: false,
-          tabBarActiveTintColor: "green",
-          tabBarInactiveTintColor: "gray",
-
-          // nền tab
-          tabBarStyle: {
-            height: 65,
-            backgroundColor: "white",
-            borderTopWidth: 0,
-          },
-
-          // ✅ GẠCH NGANG DƯỚI TOÀN TAB
-          tabBarBackground: () => {
-            let left = "0%";
-
-            if (route.name === "Shop") left = "0%";
-            else if (route.name === "Explore") left = "20%";
-            else if (route.name === "Cart") left = "40%";
-            else if (route.name === "Favourite") left = "60%";
-            else if (route.name === "Account") left = "80%";
-
-            return (
-              <View style={{ flex: 1 }}>
-                {/* nền */}
-                <View style={{ flex: 1, backgroundColor: "white" }} />
-
-                {/* thanh chạy */}
-                <View
-                  style={{
-                    position: "absolute",
-                    bottom: 0,
-                    left: left,
-                    width: "20%",
-                    height: 3,
-                    backgroundColor: "green",
-                  }}
-                />
-              </View>
-            );
-          },
-
-          tabBarIcon: ({ focused }) => {
-            let icon;
-
-            if (route.name === "Shop") {
-              icon = require("./assets/Vector1.png");
-            } else if (route.name === "Explore") {
-              icon = require("./assets/Vector2.png");
-            } else if (route.name === "Cart") {
-              icon = require("./assets/Vector3.png");
-            } else if (route.name === "Favourite") {
-              icon = require("./assets/Vector4.png");
-            } else if (route.name === "Account") {
-              icon = require("./assets/Vector5.png");
-            }
-
-            return (
-              <Image
-                source={icon}
-                style={{
-                  width: 24,
-                  height: 24,
-                  tintColor: focused ? "green" : "gray",
-                }}
-                resizeMode="contain"
-              />
-            );
-          },
-        })}
-      >
-        <Tab.Screen name="Shop" component={ShopStack} />
-        <Tab.Screen name="Explore" component={ExploreStack} />
-        <Tab.Screen name="Cart" component={CartStack} />
-        <Tab.Screen name="Favourite" component={FavouriteScreen} />
-        <Tab.Screen name="Account" component={AccountScreen} />
-      </Tab.Navigator>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {!isLoggedIn ? (
+          <>
+            <Stack.Screen name="Splash" component={SplashScreen} />
+            <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="SignUp" component={SignUpScreen} />
+            <Stack.Screen name="MainApp" component={TabNavigator} />
+            <Stack.Screen name="Checkout" component={CheckoutScreen} />
+            <Stack.Screen name="OrderSuccess" component={OrderSuccessScreen} />
+            <Stack.Screen name="OrderFailed" component={OrderFailedScreen} />
+            <Stack.Screen name="Beverage" component={BeverageScreen} />
+            <Stack.Screen name="Search" component={SearchScreen} />
+            <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
+            {/* Thêm 2 màn hình mới */}
+            <Stack.Screen name="OrdersScreen" component={OrdersScreen} />
+            <Stack.Screen name="OrderHistory" component={OrderHistoryScreen} />
+          </>
+        ) : (
+          <>
+            <Stack.Screen name="MainApp" component={TabNavigator} />
+            <Stack.Screen name="Checkout" component={CheckoutScreen} />
+            <Stack.Screen name="OrderSuccess" component={OrderSuccessScreen} />
+            <Stack.Screen name="OrderFailed" component={OrderFailedScreen} />
+            <Stack.Screen name="Beverage" component={BeverageScreen} />
+            <Stack.Screen name="Search" component={SearchScreen} />
+            <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
+            {/* Thêm 2 màn hình mới */}
+            <Stack.Screen name="OrdersScreen" component={OrdersScreen} />
+            <Stack.Screen name="OrderHistory" component={OrderHistoryScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="SignUp" component={SignUpScreen} />
+          </>
+        )}
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }

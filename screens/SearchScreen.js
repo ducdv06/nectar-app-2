@@ -1,3 +1,4 @@
+// screens/SearchScreen.js - Sửa phần điều hướng
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -9,10 +10,12 @@ import {
   TextInput,
   BackHandler,
   ScrollView,
+  Alert,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import FilterModal from "./FilterModal";
+import { addToCart } from "../services/storageService";
 
 export default function SearchScreen() {
   const navigation = useNavigation();
@@ -52,11 +55,13 @@ export default function SearchScreen() {
     let results = [...allProducts];
     
     if (searchText.trim()) {
-      results = results.filter(product =>
-        product.name.toLowerCase().includes(searchText.toLowerCase()) ||
-        product.category.toLowerCase().includes(searchText.toLowerCase()) ||
-        (product.desc && product.desc.toLowerCase().includes(searchText.toLowerCase()))
-      );
+      const keyword = searchText.toLowerCase().trim();
+      results = results.filter(product => {
+        if (product.name.toLowerCase().includes(keyword)) return true;
+        if (product.category.toLowerCase().includes(keyword)) return true;
+        if (product.desc && product.desc.toLowerCase().includes(keyword)) return true;
+        return false;
+      });
     }
     
     if (filters.categories.length > 0) {
@@ -74,46 +79,47 @@ export default function SearchScreen() {
     performSearch();
   }, [searchText, filters]);
 
-  // Xử lý khi xóa text tìm kiếm - quay lại Explore
-  const handleClearSearch = () => {
-    setSearchText("");
-    navigation.navigate("Explore");
-  };
-
-  // Xử lý khi text thay đổi - nếu text rỗng thì quay về Explore
+  // Xử lý khi text thay đổi
   const handleTextChange = (text) => {
     setSearchText(text);
-    // Nếu text trống, quay về Explore
-    if (text.trim() === "") {
-      navigation.navigate("Explore");
-    }
   };
 
-  // Xử lý nút back - quay lại Explore nếu có text hoặc filter
-  const handleBack = () => {
-    if (searchText || filters.categories.length > 0 || filters.brands.length > 0) {
-      navigation.navigate("Explore");
-    } else {
-      navigation.goBack();
-    }
-  };
-
-  // Xử lý khi nhấn nút back vật lý
-  useEffect(() => {
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-      if (searchText || filters.categories.length > 0 || filters.brands.length > 0) {
-        navigation.navigate("Explore");
-        return true;
-      }
-      return false;
+  // Xóa text và quay về Explore
+  const handleClearSearch = () => {
+    setSearchText("");
+    setSearchResults([]);
+    // Điều hướng về màn hình Explore trong TabNavigator
+    navigation.replace("MainApp", {
+      screen: "Explore",
     });
+  };
 
-    return () => backHandler.remove();
-  }, [searchText, filters]);
+  // Điều hướng về Explore khi nhấn nút back
+  const handleGoBack = () => {
+    // Điều hướng về màn hình Explore trong TabNavigator
+    navigation.replace("MainApp", {
+      screen: "Explore",
+    });
+  };
+
+  // Thêm sản phẩm vào giỏ
+  const handleAddToCart = async (item) => {
+    const productToAdd = {
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      image: item.image,
+      desc: item.desc,
+      category: item.category,
+    };
+    await addToCart(productToAdd, 1);
+    Alert.alert("Success", `${item.name} added to cart`);
+  };
 
   // Áp dụng filter
   const handleApplyFilters = (newFilters) => {
     setFilters(newFilters);
+    setIsFilterVisible(false);
   };
 
   // Xóa filter
@@ -121,20 +127,32 @@ export default function SearchScreen() {
     setFilters({ categories: [], brands: [] });
   };
 
+  // Xử lý khi nhấn nút back vật lý
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      navigation.replace("MainApp", {
+        screen: "Explore",
+      });
+      return true;
+    });
+
+    return () => backHandler.remove();
+  }, [navigation]);
+
   const renderGridItem = ({ item }) => (
     <TouchableOpacity 
       style={styles.gridCard}
-      onPress={() => navigation.navigate("Shop", {
-        screen: "Detail",
-        params: { item }
-      })}
+      onPress={() => navigation.navigate("ProductDetail", { item })}
     >
       <Image source={item.image} style={styles.gridImage} />
       <Text style={styles.gridName}>{item.name}</Text>
       {item.desc && <Text style={styles.gridDesc}>{item.desc}</Text>}
       <Text style={styles.gridPrice}>${item.price}</Text>
       
-      <TouchableOpacity style={styles.addButton}>
+      <TouchableOpacity 
+        style={styles.addButton}
+        onPress={() => handleAddToCart(item)}
+      >
         <Text style={styles.addButtonText}>+</Text>
       </TouchableOpacity>
     </TouchableOpacity>
@@ -143,10 +161,7 @@ export default function SearchScreen() {
   const renderListItem = ({ item }) => (
     <TouchableOpacity 
       style={styles.listCard}
-      onPress={() => navigation.navigate("Shop", {
-        screen: "Detail",
-        params: { item }
-      })}
+      onPress={() => navigation.navigate("ProductDetail", { item })}
     >
       <Image source={item.image} style={styles.listImage} />
       <View style={styles.listInfo}>
@@ -155,7 +170,10 @@ export default function SearchScreen() {
         {item.desc && <Text style={styles.listDesc}>{item.desc}</Text>}
         <Text style={styles.listPrice}>${item.price}</Text>
       </View>
-      <TouchableOpacity style={styles.addButtonList}>
+      <TouchableOpacity 
+        style={styles.addButtonList}
+        onPress={() => handleAddToCart(item)}
+      >
         <Text style={styles.addButtonText}>+</Text>
       </TouchableOpacity>
     </TouchableOpacity>
@@ -164,6 +182,13 @@ export default function SearchScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+        <TouchableOpacity 
+          onPress={handleGoBack} 
+          style={styles.backButton}
+        >
+          <Ionicons name="chevron-back" size={24} color="black" />
+        </TouchableOpacity>
+        
         <View style={styles.searchContainer}>
           <Ionicons name="search-outline" size={20} color="gray" />
           <TextInput
@@ -183,6 +208,10 @@ export default function SearchScreen() {
         
         <TouchableOpacity onPress={() => setIsFilterVisible(true)} style={styles.iconButton}>
           <Ionicons name="options-outline" size={24} color="black" />
+        </TouchableOpacity>
+        
+        <TouchableOpacity onPress={() => setIsGrid(!isGrid)} style={styles.gridButton}>
+          <Ionicons name={isGrid ? "list-outline" : "grid-outline"} size={24} color="black" />
         </TouchableOpacity>
       </View>
 
@@ -208,6 +237,15 @@ export default function SearchScreen() {
         </View>
       )}
 
+      {/* Hiển thị số lượng kết quả */}
+      {searchText.length > 0 && (
+        <View style={styles.resultCount}>
+          <Text style={styles.resultCountText}>
+            Found {searchResults.length} result{searchResults.length !== 1 ? 's' : ''} for "{searchText}"
+          </Text>
+        </View>
+      )}
+
       {/* Kết quả tìm kiếm */}
       {searchResults.length > 0 ? (
         <FlatList
@@ -220,13 +258,13 @@ export default function SearchScreen() {
           showsVerticalScrollIndicator={false}
           columnWrapperStyle={isGrid ? styles.columnWrapper : null}
         />
-      ) : (
+      ) : searchText.length > 0 ? (
         <View style={styles.emptyContainer}>
           <Ionicons name="search-outline" size={80} color="#ccc" />
           <Text style={styles.emptyText}>No products found</Text>
           <Text style={styles.emptySubText}>Try searching with different keywords</Text>
         </View>
-      )}
+      ) : null}
 
       <FilterModal
         visible={isFilterVisible}
@@ -251,6 +289,10 @@ const styles = StyleSheet.create({
     borderBottomColor: "#eee",
     marginTop: 40,
   },
+  backButton: {
+    padding: 5,
+    marginRight: 10,
+  },
   searchContainer: {
     flex: 1,
     flexDirection: "row",
@@ -267,6 +309,10 @@ const styles = StyleSheet.create({
   },
   iconButton: {
     marginLeft: 10,
+    padding: 5,
+  },
+  gridButton: {
+    marginLeft: 5,
     padding: 5,
   },
   filterBar: {
@@ -302,6 +348,17 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "red",
     marginLeft: 10,
+  },
+  resultCount: {
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    backgroundColor: "#fff",
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
+  },
+  resultCountText: {
+    fontSize: 14,
+    color: "#666",
   },
   resultsList: {
     padding: 10,

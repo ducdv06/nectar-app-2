@@ -1,62 +1,65 @@
-Đỗ Văn Đức - 23810310329 - nectar-app-2
+# Nectar App - Đồ án lập trình trên thiết bị di động
 
+## Thông tin sinh viên
+- **Họ và tên:** [Tên của bạn]
+- **MSSV:** [Mã số sinh viên của bạn]
+- **Lớp:** [Tên lớp]
 
+## Mô tả ứng dụng
+Nectar App là ứng dụng mua sắm trực tuyến (groceries) với các chức năng:
+- Đăng ký / Đăng nhập tài khoản
+- Xem danh sách sản phẩm
+- Tìm kiếm sản phẩm
+- Lọc sản phẩm theo danh mục và thương hiệu
+- Thêm sản phẩm vào giỏ hàng
+- Quản lý giỏ hàng (tăng/giảm số lượng, xóa sản phẩm)
+- Đặt hàng và lưu lịch sử đơn hàng
+- Xem lịch sử đơn hàng
 
-home
-![home1](https://github.com/user-attachments/assets/390068db-aa6a-44be-b55f-fbe19728260b)
-![home2](https://github.com/user-attachments/assets/c8c2de53-4bfe-4644-811d-85c682ef1aa7)
+## Chức năng chính
 
+### 1. Xác thực & Lưu đăng nhập
+- Đăng ký tài khoản mới
+- Đăng nhập với tài khoản đã đăng ký
+- Tự động đăng nhập khi mở lại ứng dụng
+- Đăng xuất xóa toàn bộ dữ liệu
 
+### 2. Giỏ hàng
+- Thêm sản phẩm vào giỏ
+- Lưu giỏ hàng vào AsyncStorage
+- Tăng/giảm số lượng sản phẩm
+- Xóa sản phẩm khỏi giỏ
 
-productdetail
-![detail](https://github.com/user-attachments/assets/e5310f91-a169-4d8a-8aab-38fb5e550a52)
+### 3. Đơn hàng
+- Xác nhận đơn hàng trước khi đặt
+- Lưu đơn hàng vào AsyncStorage
+- Hiển thị danh sách đơn hàng với thời gian đặt
 
+## Công nghệ sử dụng
+- React Native
+- Expo
+- React Navigation
+- AsyncStorage
 
+## Hướng dẫn cài đặt và chạy app
 
-explore
-![explore](https://github.com/user-attachments/assets/41d904cc-cc5a-4f75-b514-75b49cb5a4ac)
+### Yêu cầu
+- Node.js (>= 14.x)
+- npm hoặc yarn
+- Expo CLI
+- Điện thoại có cài Expo Go hoặc máy ảo Android/iOS
 
+### Các bước chạy
 
+```bash
+# 1. Clone dự án
+git clone https://github.com/[username]/nectar-app-2.git
 
-beverage
-![beverage](https://github.com/user-attachments/assets/cf4da4b4-be13-4bc3-9493-d7d686860708)
+# 2. Di chuyển vào thư mục dự án
+cd nectar-app-2
 
+# 3. Cài đặt dependencies
+npm install
 
-
-filter
-![filter](https://github.com/ducdv06/nectar-app-2/blob/main/assets/filter.jpg)
-
-
-
-mycart
-![mycart](https://github.com/ducdv06/nectar-app-2/blob/main/assets/mycart.jpg)
-
-
-
-myfavorite
-![myfavorite](https://github.com/ducdv06/nectar-app-2/blob/main/assets/myfavorite.jpg)
-
-
-
-search
-![search](https://github.com/ducdv06/nectar-app-2/blob/main/assets/search.jpg)
-
-
-
-account
-![z7711412522102_ea823129c99eec4b7cb22dcf968ab71f](https://github.com/user-attachments/assets/7e538400-1ab1-4737-beec-b99f1b33572a)
-
-
-
-error
-![z7711411847181_28f37b32ed93980b0621895bb7a006c4](https://github.com/user-attachments/assets/d2f60f6b-d8da-4178-90da-3fec94ce3159)
-
-
-
-order acepted
-![z7711411827195_a3e815bbd5ad137a3dd6763a365258ba](https://github.com/user-attachments/assets/8488bfed-4b35-4c1c-89d8-0545a2b129f4)
-
-
-
-checkout
-![z7711411816952_139a6b79b87510849280ca7758cb1963](https://github.com/user-attachments/assets/dbc1d405-9f81-4918-878c-294d1f59585d)
+# 4. Chạy ứng dụng
+npx expo start -c

@@ -1,3 +1,4 @@
+// screens/ExploreScreen.js
 import React, { useState } from "react";
 import {
   View,
@@ -7,11 +8,10 @@ import {
   TextInput,
   FlatList,
   TouchableOpacity,
-  Modal,
-  ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import FilterModal from "./FilterModal";
 
 export default function ExploreScreen() {
   const navigation = useNavigation();
@@ -20,7 +20,6 @@ export default function ExploreScreen() {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedBrands, setSelectedBrands] = useState([]);
 
-  // Dữ liệu categories
   const categoriesData = [
     {
       id: 1,
@@ -66,11 +65,9 @@ export default function ExploreScreen() {
     },
   ];
 
-  // Filter options
   const filterCategories = ["Eggs", "Noodles & Pasta", "Chips & Crisps", "Fast Food"];
   const filterBrands = ["Individual Collection", "Cocola", "Ifad", "Kazi Farmas"];
 
-  // Hàm xử lý search
   const handleSearch = () => {
     if (searchText.trim()) {
       navigation.navigate("Search", { query: searchText });
@@ -78,7 +75,6 @@ export default function ExploreScreen() {
     }
   };
 
-  // Hàm toggle category filter
   const toggleCategory = (category) => {
     if (selectedCategories.includes(category)) {
       setSelectedCategories(selectedCategories.filter(c => c !== category));
@@ -87,7 +83,6 @@ export default function ExploreScreen() {
     }
   };
 
-  // Hàm toggle brand filter
   const toggleBrand = (brand) => {
     if (selectedBrands.includes(brand)) {
       setSelectedBrands(selectedBrands.filter(b => b !== brand));
@@ -96,14 +91,11 @@ export default function ExploreScreen() {
     }
   };
 
-  // Hàm áp dụng filter
   const applyFilters = () => {
-    // Lưu filters vào state hoặc context để sử dụng ở SearchScreen
     console.log("Applied filters:", { categories: selectedCategories, brands: selectedBrands });
     setIsFilterVisible(false);
   };
 
-  // Hàm reset filters
   const resetFilters = () => {
     setSelectedCategories([]);
     setSelectedBrands([]);
@@ -113,16 +105,12 @@ export default function ExploreScreen() {
     <TouchableOpacity
       style={[
         styles.box,
-        {
-          backgroundColor: item.bg,
-          borderColor: item.border,
-        },
+        { backgroundColor: item.bg, borderColor: item.border },
       ]}
       onPress={() => {
         if (item.name === "Beverages") {
-          navigation.navigate("Beverages");
+          navigation.navigate("Beverage");
         } else {
-          // Tìm kiếm theo category
           navigation.navigate("Search", { query: item.name });
         }
       }}
@@ -136,10 +124,8 @@ export default function ExploreScreen() {
 
   return (
     <View style={{ flex: 1, marginTop: 20 }}>
-      {/* TITLE */}
       <Text style={styles.title}>Find Products</Text>
 
-      {/* SEARCH BAR */}
       <View style={styles.searchBox}>
         <Ionicons name="search-outline" size={20} color="gray" />
         <TextInput
@@ -155,9 +141,11 @@ export default function ExploreScreen() {
             <Ionicons name="close-circle" size={20} color="gray" />
           </TouchableOpacity>
         )}
+        <TouchableOpacity onPress={() => setIsFilterVisible(true)} style={styles.filterIcon}>
+          <Ionicons name="options-outline" size={20} color="gray" />
+        </TouchableOpacity>
       </View>
 
-      {/* CATEGORIES LIST */}
       <FlatList
         data={categoriesData}
         numColumns={2}
@@ -168,67 +156,18 @@ export default function ExploreScreen() {
         showsVerticalScrollIndicator={false}
       />
 
-      {/* FILTER MODAL */}
-      <Modal
-        animationType="slide"
-        transparent={false}
+      <FilterModal
         visible={isFilterVisible}
-        onRequestClose={() => setIsFilterVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          {/* Modal Header */}
-          <View style={styles.modalHeader}>
-            <TouchableOpacity onPress={() => setIsFilterVisible(false)}>
-              <Ionicons name="close" size={24} color="black" />
-            </TouchableOpacity>
-            <Text style={styles.modalTitle}>Filters</Text>
-            <TouchableOpacity onPress={resetFilters}>
-              <Text style={styles.resetText}>Reset</Text>
-            </TouchableOpacity>
-          </View>
-
-          <ScrollView style={styles.modalContent}>
-            {/* Categories Section */}
-            <Text style={styles.sectionTitle}>Categories</Text>
-            {filterCategories.map((cat) => (
-              <TouchableOpacity
-                key={cat}
-                style={styles.option}
-                onPress={() => toggleCategory(cat)}
-              >
-                <View style={styles.checkbox}>
-                  {selectedCategories.includes(cat) && (
-                    <Ionicons name="checkmark" size={16} color="green" />
-                  )}
-                </View>
-                <Text style={styles.optionText}>{cat}</Text>
-              </TouchableOpacity>
-            ))}
-
-            {/* Brand Section */}
-            <Text style={[styles.sectionTitle, { marginTop: 20 }]}>Brand</Text>
-            {filterBrands.map((brand) => (
-              <TouchableOpacity
-                key={brand}
-                style={styles.option}
-                onPress={() => toggleBrand(brand)}
-              >
-                <View style={styles.checkbox}>
-                  {selectedBrands.includes(brand) && (
-                    <Ionicons name="checkmark" size={16} color="green" />
-                  )}
-                </View>
-                <Text style={styles.optionText}>{brand}</Text>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-
-          {/* Apply Button */}
-          <TouchableOpacity style={styles.applyButton} onPress={applyFilters}>
-            <Text style={styles.applyButtonText}>Apply Filter</Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
+        onClose={() => setIsFilterVisible(false)}
+        onApply={applyFilters}
+        categories={filterCategories}
+        brands={filterBrands}
+        selectedCategories={selectedCategories}
+        selectedBrands={selectedBrands}
+        toggleCategory={toggleCategory}
+        toggleBrand={toggleBrand}
+        resetFilters={resetFilters}
+      />
     </View>
   );
 }
@@ -278,68 +217,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     width: "100%",
     lineHeight: 18,
-  },
-  // Modal styles
-  modalContainer: {
-    flex: 1,
-    backgroundColor: "#f5f5f5",
-  },
-  modalHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 20,
-    backgroundColor: "#fff",
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
-    marginTop: 40,
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  resetText: {
-    fontSize: 14,
-    color: "red",
-  },
-  modalContent: {
-    padding: 20,
-  },
-  sectionTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    marginBottom: 15,
-    color: "#333",
-  },
-  option: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 15,
-  },
-  checkbox: {
-    width: 22,
-    height: 22,
-    borderWidth: 2,
-    borderColor: "#ddd",
-    borderRadius: 6,
-    marginRight: 12,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  optionText: {
-    fontSize: 15,
-    color: "#333",
-  },
-  applyButton: {
-    backgroundColor: "green",
-    margin: 20,
-    padding: 16,
-    borderRadius: 12,
-    alignItems: "center",
-  },
-  applyButtonText: {
-    color: "#fff",
-    fontSize: 16,
-    fontWeight: "bold",
   },
 });
