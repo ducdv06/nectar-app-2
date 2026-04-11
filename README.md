@@ -72,15 +72,15 @@ npm install
 npx expo start -c
 
 STT	Chức năng	Ảnh minh họa
-| 01 | Login thành công | ![01_login](./screenshots/23810310329_01_login.png) |
-| 02 | Auto login | ![02_autologin](./screenshots/23810310329_02_autologin.png) |
-| 03 | Logout | ![03_logout](./screenshots/23810310329_03_logout.png) |
-| 04 | Thêm vào giỏ | ![04_add_to_cart](./screenshots/23810310329_04_add_to_cart.png) |
-| 05 | Giỏ hàng sau reload | ![05_cart_reload](./screenshots/23810310329_05_cart_reload.png) |
-| 06 | Thay đổi số lượng | ![06_cart_change](./screenshots/23810310329_06_cart_change.png) |
-| 07 | Đặt hàng thành công | ![07_order_success](./screenshots/23810310329_07_order_success.png) |
-| 08 | Danh sách đơn hàng | ![08_orders_list](./screenshots/23810310329_08_orders_list.png) |
-| 09 | Đơn hàng sau reload | ![09_orders_reload](./screenshots/23810310329_09_orders_reload.png) |
+| 01 | Login thành công | [![01_login](./screenshots/23810310329_01_login.png)](https://github.com/ducdv06/nectar-app-2/blob/main/screenshots/23810310329_01_login.png) |
+| 02 | Auto login | [![02_autologin](./screenshots/23810310329_02_autologin.png)](https://github.com/ducdv06/nectar-app-2/blob/main/screenshots/23810310329_02_autologin.png) |
+| 03 | Logout | [![03_logout](./screenshots/23810310329_03_logout.png)](https://github.com/ducdv06/nectar-app-2/blob/main/screenshots/23810310329_03_logout.png) |
+| 04 | Thêm vào giỏ | [![04_add_to_cart](./screenshots/23810310329_04_add_to_cart.png)](https://github.com/ducdv06/nectar-app-2/blob/main/screenshots/23810310329_04_add_to_cart.png) |
+| 05 | Giỏ hàng sau reload | [![05_cart_reload](./screenshots/23810310329_05_cart_reload.png)](https://github.com/ducdv06/nectar-app-2/blob/main/screenshots/23810310329_05_cart_reload.png) |
+| 06 | Thay đổi số lượng | [![06_cart_change](./screenshots/23810310329_06_cart_change.png)](https://github.com/ducdv06/nectar-app-2/blob/main/screenshots/23810310329_06_cart_change.png) |
+| 07 | Đặt hàng thành công | [![07_order_success](./screenshots/23810310329_07_order_success.png)](https://github.com/ducdv06/nectar-app-2/blob/main/screenshots/23810310329_07_order_success.png) |
+| 08 | Danh sách đơn hàng | [![08_orders_list](./screenshots/23810310329_08_orders_list.png)](https://github.com/ducdv06/nectar-app-2/blob/main/screenshots/23810310329_08_orders_list.png) |
+| 09 | Đơn hàng sau reload | [![09_orders_reload](./screenshots/23810310329_09_orders_reload.png)](https://github.com/ducdv06/nectar-app-2/blob/main/screenshots/23810310329_09_orders_reload.png) |
 
 
 1. AsyncStorage hoạt động như thế nào?
