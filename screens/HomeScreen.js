@@ -112,6 +112,11 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      {/* Header hiển thị tên và MSSV */}
+      <View style={styles.mssvHeader}>
+        <Text style={styles.mssvText}>Đỗ Văn Đức - 23810310329</Text>
+      </View>
+      
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.header}>
           <View style={styles.logoWrapper}>
@@ -181,6 +186,19 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
+  // Header MSSV mới thêm
+  mssvHeader: {
+    backgroundColor: "green",
+    paddingTop: 10,
+    paddingBottom: 10,
+    alignItems: "center",
+  },
+  mssvText: {
+    color: "#fff",
+    fontSize: 14,
+    fontWeight: "bold",
+  },
+  // Các style cũ giữ nguyên
   container: {
     padding: 15,
     backgroundColor: "#f5f5f5",
