@@ -72,23 +72,15 @@ npm install
 npx expo start -c
 
 STT	Chức năng	Ảnh minh họa
-01	Login thành công	![23810310329_01_login](https://github.com/user-attachments/assets/98a81f41-bbf2-4c3c-b24b-197f750a1cc2)
-
-02	Auto login	![23810310329_02_autologin](https://github.com/user-attachments/assets/96cc2f28-e3c3-410c-9eaf-1f3a5989af47)
-
-03	Logout	![23810310329_03_logout](https://github.com/user-attachments/assets/4d70251b-8f1a-4d5d-8162-abf6f6966560)
-
-04	Thêm vào giỏ	![23810310329_04_add_to_cart](https://github.com/user-attachments/assets/c373683b-ef2e-4a9a-9129-38c8351f4a64)
-
-05	Giỏ hàng sau reload	![23810310329_05_cart_reload](https://github.com/user-attachments/assets/aecbbe62-6311-4467-9a34-b3e54ec31e28)
-
-06	Thay đổi số lượng	![23810310329_06_cart_change](https://github.com/user-attachments/assets/1233a5f0-bcf5-4ea0-b938-ddc1ce1ab4dc)
-
-07	Đặt hàng thành công	![23810310329_07_order_success](https://github.com/user-attachments/assets/28ebedde-f39d-4ff0-a563-8958b3282c06)
-
-08	Danh sách đơn hàng	![23810310329_08_orders_list](https://github.com/user-attachments/assets/4499392d-71bb-4408-a8f9-075f3173353e)
-
-09	Đơn hàng sau reload	![23810310329_09_orders_reload](https://github.com/user-attachments/assets/36b0f8a0-eff2-4343-bada-e1c4ee9e21ae)
+| 01 | Login thành công | ![01_login](./screenshots/23810310329_01_login.png) |
+| 02 | Auto login | ![02_autologin](./screenshots/23810310329_02_autologin.png) |
+| 03 | Logout | ![03_logout](./screenshots/23810310329_03_logout.png) |
+| 04 | Thêm vào giỏ | ![04_add_to_cart](./screenshots/23810310329_04_add_to_cart.png) |
+| 05 | Giỏ hàng sau reload | ![05_cart_reload](./screenshots/23810310329_05_cart_reload.png) |
+| 06 | Thay đổi số lượng | ![06_cart_change](./screenshots/23810310329_06_cart_change.png) |
+| 07 | Đặt hàng thành công | ![07_order_success](./screenshots/23810310329_07_order_success.png) |
+| 08 | Danh sách đơn hàng | ![08_orders_list](./screenshots/23810310329_08_orders_list.png) |
+| 09 | Đơn hàng sau reload | ![09_orders_reload](./screenshots/23810310329_09_orders_reload.png) |
 
 
 1. AsyncStorage hoạt động như thế nào?
