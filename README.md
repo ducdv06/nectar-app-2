@@ -109,10 +109,6 @@ Tốc độ	Chậm hơn (I/O)	Nhanh (RAM)
 Sử dụng	Dữ liệu lâu dài	State tạm thời
 Kết hợp	Có thể kết hợp	Cần AsyncStorage để lưu
 
-## Video demo
-
-Xem video demo tại: [https://youtu.be/xxxxx](https://youtu.be/xxxxx)
-
 Hoặc nhúng trực tiếp:
 
-[![Video Demo](https://img.youtube.com/vi/xxxxx/0.jpg)](https://youtu.be/xxxxx)
+[[![Video Demo](https://img.youtube.com/vi/xxxxx/0.jpg)](https://youtu.be/xxxxx)](https://github.com/ducdv06/nectar-app-2/blob/main/screens/assets/video_demo.mp4)
